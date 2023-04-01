@@ -1,0 +1,14 @@
+{
+    "name": "petrus",
+    "version": "1.0.0",
+    "description": "Proyecto Petrus para transmitir video en tiempo real",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "socket.io": "^4.4.1"
+    }
+  }
+  
