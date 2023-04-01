@@ -1,0 +1,11 @@
+node:
+    cd server
+    npm start
+
+docker:
+    docker build -t petrus .
+    docker run -p 3000:3000 petrus
+    docker stop --time=0 $(docker ps -aq)
+
+
+----------------------------------------------------
