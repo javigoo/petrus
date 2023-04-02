@@ -1,0 +1,13 @@
+node:
+    cd server
+    npm start
+
+docker:
+    docker build -t petrus .
+    docker run -p 3000:3000 petrus
+    docker stop --time=0 $(docker ps -aq)
+
+https:
+    openssl genrsa -out server-key.pem 2048
+    openssl req -new -key server-key.pem -out server-csr.pem
+    openssl x509 -req -in server-csr.pem -signkey server-key.pem -out server-cert.pem

@@ -1,10 +1,23 @@
 const express = require("express");
-const http = require("http");
+const https = require("https");
 const socketIO = require("socket.io");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
-const server = http.createServer(app);
+
+// Lee los archivos de certificado
+const privateKey = fs.readFileSync('certs/server-key.pem', 'utf8');
+const certificate = fs.readFileSync('certs/server-cert.pem', 'utf8');
+const ca = fs.readFileSync('certs/server-csr.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};
+
+const server = https.createServer(credentials, app);
 const io = socketIO(server);
 
 // Configura EJS como el motor de plantillas
@@ -31,17 +44,40 @@ app.get("/monitor", (req, res) => {
   res.render("layout", { content: "monitor" });
 });
 
-// Configura el servidor Socket.IO
+const peers = { broadcasters: {}, monitors: {} };
+
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
 
+  socket.on("join", (role) => {
+    if (!peers[role]) {
+      peers[role] = {};
+    }
+    peers[role][socket.id] = socket;
+    if (role === "broadcaster") {
+      for (const monitorId in peers.monitors) {
+        socket.emit("otherPeer", monitorId);
+        peers.monitors[monitorId].emit("otherPeer", socket.id);
+      }
+    }
+  });
+
+  socket.on("signal", (data) => {
+    const otherPeer = peers[data.role][data.targetSocketId];
+    if (otherPeer) {
+      otherPeer.emit("signal", { ...data, senderSocketId: socket.id });
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("Usuario desconectado");
+    if (peers.broadcasters[socket.id]) delete peers.broadcasters[socket.id];
+    if (peers.monitors[socket.id]) delete peers.monitors[socket.id];
   });
 });
 
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en https://localhost:${PORT}`);
 });

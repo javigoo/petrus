@@ -1,0 +1,69 @@
+implementar estructura de directorios:
+
+Basándonos en la estructura de directorios que tienes, aquí hay una propuesta de reorganización siguiendo las recomendaciones mencionadas anteriormente:
+
+C:\Users\Javi\Desktop\proyectos\petrus
+│   .gitignore
+│   Dockerfile
+│   package-lock.json
+│   README.md
+│
+├───client
+│   ├───css
+│   │       global.css
+│   │       ...
+│   ├───js
+│   │       global.js
+│   │       ...
+│   ├───images
+│   │       logo.png
+│   │       ...
+│   └───views
+│       ├───broadcast
+│       │       index.ejs
+│       │       ...
+│       ├───canvas
+│       │       index.ejs
+│       │       ...
+│       ├───monitor
+│       │       index.ejs
+│       │       ...
+│       └───main
+│               index.ejs
+│               ...
+│
+├───docs
+│       notes.txt
+│       ...
+│
+├───server
+│   │   index.js
+│   │   package.json
+│   │   package-lock.json
+│   │
+│   ├───controllers
+│   │       broadcastController.js
+│   │       ...
+│   ├───routes
+│   │       broadcastRoutes.js
+│   │       ...
+│   └───views
+│           layout.ejs
+│           navbar.ejs
+│           ...
+│
+└───utils
+        tree.ps1
+        tree.txt
+        ...
+
+Para reorganizar tu proyecto de acuerdo con esta estructura:
+
+Mueve todos los archivos relacionados con las vistas (ejs) en client\views y colócalos en las subcarpetas correspondientes (main, broadcast, canvas, monitor).
+Crea las carpetas css, js, e images dentro de la carpeta client y coloca los archivos correspondientes en ellas.
+Crea las carpetas controllers y routes dentro de la carpeta server, y separa la lógica de tu aplicación en controladores y rutas.
+Una vez hayas reorganizado tus archivos, asegúrate de actualizar las rutas de archivo en tu código para que apunten a las nuevas ubicaciones.
+
+
+
+------------------------------------------------------------------------------------------------------------------------

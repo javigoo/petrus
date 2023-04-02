@@ -1,11 +1,8 @@
-node:
-    cd server
-    npm start
+tree autopromt:
 
-docker:
-    docker build -t petrus .
-    docker run -p 3000:3000 petrus
-    docker stop --time=0 $(docker ps -aq)
+    1. Ejecutas el primer script y te genera el archivo "tree.txt"
+    2. Luego, nos indicas qué archivos quieres ver con un mensaje en el chat.
+    3. Yo te indicaré un comando para filtrar los archivos que deseas ver y te lo pasaré por el chat.
+    4. Tú ejecutas el comando que te proporcioné en la terminal y me das el resultado que te muestra.
 
-
-----------------------------------------------------
+    De esta manera, podré ayudarte a resolver cualquier problema que tengas en tu código.
