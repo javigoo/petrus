@@ -7,24 +7,28 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+// Configura EJS como el motor de plantillas
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 // Sirve los archivos estáticos de la carpeta "client"
 app.use(express.static(path.join(__dirname, "../client")));
 
-// Sirve el archivo index.html en la ruta raíz
+// Sirve las páginas utilizando EJS
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/views/main/index.html"));
+  res.render("layout", { content: "main" });
 });
 
 app.get("/broadcast", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/views/broadcast/index.html"));
+  res.render("layout", { content: "broadcast" });
 });
 
 app.get("/canvas", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/views/canvas/index.html"));
+  res.render("layout", { content: "canvas" });
 });
 
 app.get("/monitor", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/views/monitor/index.html"));
+  res.render("layout", { content: "monitor" });
 });
 
 // Configura el servidor Socket.IO
